@@ -1,0 +1,125 @@
+# Ques 1
+
+
+import numpy as np
+import panda as pd
+
+M = int(input())
+x = np.linspace(-10, 10)
+# Define y as a function that takes x as input
+def y(x):
+    return M * (x**2)
+
+print(y(x))
+
+def y1(x):
+    return M * (np.sin(x))
+print(y1(x))
+
+import matplotlib.pyplot as plt
+# Create the plot
+plt.figure(figsize=(8, 6))  # Adjust figure size if needed
+plt.plot(x, y(x), label='y = M * x^2', color='blue', linestyle='-')
+plt.plot(x, y1(x), label='y = M * sin(x)', color='red', linestyle='--')
+
+# Add legend, grid, and title
+plt.legend()
+plt.grid(True)
+plt.title('Plot of Two Functions')
+plt.xlabel('x')
+plt.ylabel('y')
+
+# Display the plot
+plt.show()
+
+#Ques 2
+
+data = pd.DataFrame({"Subjects": ["Eng", "Math", "Sci", "S.S.T", " Hindi"],
+        "Scores": [88, 100, 58, 20, 89]})
+
+data.head()
+
+import seaborn as sns
+plt.figure(figsize=(10, 6))
+ax = sns.barplot(x="Subjects", y="Scores", data=data, palette="viridis")  # Use 'palette' for colors
+
+# Add annotations
+for p in ax.patches:
+    ax.annotate(format(p.get_height(), '.0f'),
+                (p.get_x() + p.get_width() / 2., p.get_height()),
+                ha='center', va='center',
+                xytext=(0, 9),
+                textcoords='offset points')
+
+# Add title, labels, and grid
+plt.title("Scores in Different Subjects")
+plt.xlabel("Subjects")
+plt.ylabel("Scores")
+plt.grid(True)
+
+# Display the plot
+plt.show()
+
+# Ques3
+
+rno = int(input())
+np.random.seed(rno)
+dataset = np.random.randn(50)
+fig, axes = plt.subplots(2,2,figsize = (10,8))
+
+axes[0, 0].plot(np.cumsum(dataset),marker ="o", linestyle="-")
+axes[0, 0].set_title('Cumulative Sum')
+axes[0, 0].set_xlabel('Data Point')
+axes[0, 0].set_ylabel('Cumulative Sum')
+axes[0, 0].grid(True)
+
+# Scatter plot with random noise
+noise = np.random.randn(50) * 0.2
+axes[1, 1].scatter(dataset, dataset + noise, marker='x', color='red')
+axes[1, 1].set_title('Scatter Plot with Random Noise')
+axes[1, 1].set_xlabel('X-axis')
+axes[1, 1].set_ylabel('Y-axis')
+axes[1, 1].grid(True)
+
+
+
+# Adjust layout
+#plt.tight_layout()
+
+# Display the plot
+plt.show()
+
+#Ques 4
+
+df = pd.read_csv("/content/company_sales_data.csv")
+df.head()
+
+fig, axes = plt.subplots(2,2,figsize = (10,8))
+sns.lineplot(x="month_number", y ="total_profit",data=df, palette="viridis",ax = axes[0,0])
+axes[0,0].set_title("Total_profit for all months")
+axes[0,0].set_xlabel("Month number")
+axes[0,0].set_ylabel("Total_profit")
+axes[0,0].grid(True)
+
+# Select the columns for product sales data
+products = ['facecream', 'facewash', 'toothpaste', 'bathingsoap', 'shampoo', 'moisturizer']
+for product in products:
+    sns.lineplot(x='month_number', y=product, data=df, label=product, ax = axes[0,1])
+plt.legend()
+plt.show()
+axes[0,1].set_title("Product Sales Data")
+axes[0,1].set_xlabel("Month number")
+axes[0,1].set_ylabel("Sales")
+axes[0,1].grid(True)
+
+plt.show()
+
+#3. Bar chart for all features
+plt.figure(figsize=(16, 5))
+df.drop(columns='month_number').sum().plot(kind='bar')
+plt.title('Bar Chart for All Features/Attributes')
+plt.xlabel('Features')
+plt.ylabel('Value')
+plt.xticks(rotation=45, ha='right') # Rotate x-axis labels for better readability
+plt.tight_layout() # Adjust layout to prevent overlapping labels
+plt.show()
